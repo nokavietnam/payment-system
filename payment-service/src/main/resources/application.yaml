@@ -1,0 +1,27 @@
+spring:
+  application:
+    name: payment-service
+  cloud:
+    consul:
+      host: consul
+      port: 8500
+      discovery:
+        register: true
+        health-check-path: /actuator/health
+        health-check-interval: 10s
+server:
+  port: 9000
+management:
+  endpoints:
+    web:
+      base-path: /actuator
+      exposure:
+        include: health,info,prometheus
+        exclude: loggers
+  metrics:
+    tags:
+      application: payment-service
+#eureka:
+#  client:
+#    serviceUrl:
+#      defaultZone: http://registry-service:8761/eureka/

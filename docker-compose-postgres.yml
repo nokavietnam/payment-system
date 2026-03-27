@@ -1,0 +1,40 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:18.3-alpine
+    restart: unless-stopped
+    shm_size: 128mb
+    container_name: postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: Admin@123
+      POSTGRES_DB: postgres
+      PGDATA: /data/postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/data/postgres
+    # healthcheck:
+    #   test: ["CMD-SHELL", "pg_isready -U postgres"]
+    #   interval: 10s
+    #   timeout: 5s
+    #   retries: 5
+
+  postgres-admin:
+    image: dpage/pgadmin4:9.13.0
+    restart: unless-stopped
+    container_name: postgres-admin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@example.com
+      PGADMIN_DEFAULT_PASSWORD: Admin@123
+    ports:
+      - "5050:80"
+    depends_on:
+      - postgres
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
+
+volumes:
+  postgres_data:
+  pgadmin_data:

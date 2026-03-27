@@ -1,0 +1,15 @@
+services:
+
+  # registry-service:
+  #   build: ./registry-service
+  #   restart: unless-stopped
+  #   container_name: registry-service  
+  #   ports:
+  #     - "8761:8761"
+
+  payment-service:
+    build: ./payment-service
+    restart: unless-stopped
+    container_name: payment-service
+    ports:
+      - "9000:9000"
